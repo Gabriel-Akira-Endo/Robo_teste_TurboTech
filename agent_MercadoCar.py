@@ -8,6 +8,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.service import Service
 import time
 import os
+import select
 
 
 
@@ -55,24 +56,23 @@ botao_exibir_todas = wait.until(
 botao_exibir_todas.click()
 
 # selecionar a marca "Moura"
-marca_moura = wait.until(
-    EC.element_to_be_clickable((By.XPATH, "//*[@id='attribute-manufacturer-MOURA (35)']"))
-)
-marca_moura.click()
+# marca_moura = wait.until(
+#     EC.element_to_be_clickable((By.XPATH, "//*[@id='attribute-manufacturer-MOURA (35)']"))
+# )
+# marca_moura.click()
 
 time.sleep(5)
 
 
 # selecionar o ordem de exibição "Menor preço"
 selecionar_ordem = wait.until(
-    EC.element_to_be_clickable((By.XPATH, "//*[@id='products-orderby']"))
+    EC.element_to_be_clickable((By.ID, "//*[@id='products-orderby']"))
 )
 selecionar_ordem.click()
 
-ordem_menor_preco = wait.until(
-    EC.element_to_be_clickable((By.XPATH, "//*[@id='products-orderby']/option[5]"))
-)
-ordem_menor_preco.click()
+select = select(selecionar_ordem)
+select.select_by_value(10)
+time.sleep(10)
 
 # Fecha o navegador
 driver.quit()
